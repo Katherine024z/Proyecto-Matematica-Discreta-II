@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
                 Sleep(2000);
                 system("cls");
                 Juego();
-                Sleep(2000);
+                Sleep(1000);
                 system("cls");
                 break;
             case 2:
@@ -411,7 +411,8 @@ void Fase1(struct Personaje &p, bool &tablero){
           if(p.clase=="Mago"){
             std::cout << "(como mago sabes que este sitio posee mejores hierbas)";
           }
-          std::cout << "\nB. Bosque sur";
+          std::cout << "\nB. Bosque sur\n";
+          std::cout<<"Opcion: ";
           std::cin >> encargo3;
           switch (encargo3) {
             case 'A':
@@ -437,13 +438,13 @@ void Fase1(struct Personaje &p, bool &tablero){
         std::cout << "->Realizar pocion ("<<p.mana<<"%)"<<'\n';
         
         std::cin.get();
-        system("cls");
         sucede = AleatorioAccion(p.mana);
         if (encargo3 == 'A'){
           p.mana-=15;
         }
-        std::cout << "============================================================================" <<'\n';
+        system("cls");
         if(sucede){
+          std::cout << "============================================================================" <<'\n';
           std::cout << "La posion fue exitosa, logras obtener una botella extra y el dinero del" << '\n'
                     << "encargo, parece que a la chica le espera un largo futuro por delante" <<'\n'
                     << "aunque por las condiciones en las que el reino se encuentra, quien sabe " << '\n'
@@ -452,12 +453,15 @@ void Fase1(struct Personaje &p, bool &tablero){
           p.reputacion+=10;
           Penalizacion(p,penalizacion);
         }else{
+          std::cout << "============================================================================" <<'\n';
           std::cout << "La posion fue un fracaso, el chico parece decepcionado, te da un poco de" << '\n'
                     << "encargo, parece que a la chica le espera un largo futuro por delante" <<'\n'
                     << "aunque por las condiciones en las que el reino se encuentra, quien sabe " << '\n'
                     << "que pasara en el futuro"<<'\n';
         }
         std::cout << "============================================================================" <<'\n';
+        std::cin.get();
+        break;
       }
       default:
         std::cout<<"El encargo no es correcto intente otra vez"<<'\n';
@@ -559,11 +563,11 @@ void Mago(struct Personaje& p) {
                "decides que este sera el sitio donde pasaras un tiempo antes \n"
                "de continuar viajando\n";
   std::cout << "=================================================================" <<'\n';
-
+  std::cin.get();
+  system("cls");
   std::cout << std::endl;
   Fase1(p,tablero);
   std::cout << std::endl;
-
   std::cout << "=====================================================================" <<'\n';
   std::cout << "En tu estancia por la taberna te has percatado que un grupo de \n"
                "personas te estan observando. Uno de ellos te entrega una carta, \n"
@@ -601,12 +605,10 @@ void Fase2(struct Personaje& p, bool &fin, bool &tablero) {
                  "como muestra de agradecimiento\n";
     Objetos(p);
     Penalizacion(p, penalizacion);
-    std::cin.ignore();
     std::cin.get();
     // aumenta la habilidad segun el objeto obtenido
     std::cout << "=====================================================================" <<'\n';
-    std::cout
-        << "Llegas a la plaza en busca de pistas, decides preguntarles a los \n"
+    std::cout << "Llegas a la plaza en busca de pistas, decides preguntarles a los \n"
            "mercaderes ya que como es bien sabido, el gremio de mercaderes del \n"
            "reino de Nerva conoce de todo por sus conexiones con las distintas \n"
            "regiones. Lo unico novedoso que te informan es que hay un grupo de \n"
@@ -614,7 +616,6 @@ void Fase2(struct Personaje& p, bool &fin, bool &tablero) {
            "de personas por los caminos\n";   
     std::cout << "=====================================================================" <<'\n';
   } else {
-    std::cin.ignore();
     std::cout << "=====================================================================" <<'\n';
     std::cout << "Ahora te diriges a la plaza del pueblo, lugar donde abundan las "
                  "habladurias y quien sabe, tal vez encuentres informacion "
@@ -632,13 +633,12 @@ bool AleatorioAccion(int Probabilidad){
     int t = time(NULL);
     srand(t);
     int prob=rand()%100;
-    std::cout<<prob<<" ";
     if (prob<=Probabilidad){
         return true;
     }
-    else if(Probabilidad<prob){
+    else{
         return false;
-    }
+    }    
 }
 void Penalizacion(struct Personaje &p, int penalizacion){
   //aunque la probabilidad puede llegar a 1 o 100 para el juego queremos evitar que siempre gane el usuario, como minimo 99
@@ -693,8 +693,7 @@ void Objetos(struct Personaje &p) {
 void Mito1(struct Personaje &p, int penalizacion, bool &fin) {
   bool sucede;
   std::cout << "=====================================================================" <<'\n';
-  std::cout
-      << "Saliendo de la plaza escuchas a personas murmurar de un rumor en el \n"
+  std::cout << "Saliendo de la plaza escuchas a personas murmurar de un rumor en el \n"
          "pueblo de Valdoria, este es sobre el espiritu de un antiguo \n"
          "caballero que aparece cerca de un arbol marchito y que ultimamente \n"
          "aparece con mas frecuencia, especialmente en las noches.\n";
@@ -728,11 +727,11 @@ void Mito1(struct Personaje &p, int penalizacion, bool &fin) {
   sucede=AleatorioAccion(p.reputacion);
   if(sucede){
     std::cout << "==============================================================================" <<'\n';
-    std::cout<< "Valian siente tu aura positiva y confía en ti por lo que revela la ubicación de"
-                "un “lugar sagrado” donde encontrara información importante, este se encuentra en"
-                "las ruinas recónditas en lo profundo del bosque, un lugar olvidado donde hace"
-                "siglos se le rendía culto a la diosa, a pesar de que te revelo el lugar no te"
-                "revela el nombre de la diosa.";    
+    std::cout<< "Valian siente tu aura positiva y confia en ti por lo que revela la ubicacion de\n"
+                "un lugar sagrado donde encontraras informacion importante, este se encuentra en\n"
+                "las ruinas recónditas en lo profundo del bosque, un lugar olvidado donde hace\n"
+                "siglos se le rendia culto a la diosa, a pesar de que te revelo el lugar no te\n"
+                "revela el nombre de la diosa.\n";    
     std::cout << "==============================================================================" <<'\n';
   }else{
     std::cout << "===========================================================================" <<'\n';
@@ -775,7 +774,7 @@ void Mito2(struct Personaje &p, int penalizacion) {
   std::cout << "Con la informacion que obtuviste, llegaste a las ruinas reconditas.\n";
   std::cout << "A las afueras de estas se encuentra un campamento de arqueologos, decides \n"
                "hablar con los que estan ahi para que te cuenten lo que saben, dices que\n";
-  std::cout << "vienes de parte del rey.";
+  std::cout << "vienes de parte del rey.\n";
   std::cout << "===========================================================================" <<'\n';               
   std::cin.get();
   std::cout << "===========================================================================" <<'\n';
@@ -799,7 +798,7 @@ void Mito2(struct Personaje &p, int penalizacion) {
 
   // toma de decision
   std::cout << "===========================================================================" <<'\n';
-  std::cout << "Prosigues con tu camino y te encuentras los dos caminos, ";
+  std::cout << "Prosigues con tu camino y te encuentras los dos caminos,\n ";
   std::cout << "teniendo en cuenta lo que te dijeron los arqueologos, \n"
             <<"decides:\n";
   do {
@@ -811,7 +810,6 @@ void Mito2(struct Personaje &p, int penalizacion) {
 
     if (decision == 1) {
       system("cls");
-      std::cin.ignore();
       std::cout << std::endl
                 << "Tal y como te lo comentaron, al final del camino se encuentran ";
       std::cout << "las palancas.\n";
@@ -819,7 +817,6 @@ void Mito2(struct Personaje &p, int penalizacion) {
 
     } else if (decision == 2) {
       system("cls");
-      std::cin.ignore();
       std::cout << "==========================================================================" <<'\n';
       std::cout << "Logras atravesar con dificultad la minuscula abertura, encuentras \n"
                    "unos murales con dibujos y textos." << std::endl;
@@ -842,14 +839,14 @@ void Mito2(struct Personaje &p, int penalizacion) {
       std::cout << "==========================================================================" <<'\n';
       std::cout << "Finalmente llegas al final del pasillo que tiene una inscripcion que con \n"
                    "el paso del tiempo se ha ido deteriorando pero aun es entendible:\n"<<std::endl;
-      std::cout << "\n-->Tu, persona temeraria que te adentras al Templo Recondito, "
+      std::cout << "\n-->Tu, persona temeraria que te adentras al Templo Recondito,\n "
                    "estas listo para proseguir tu aventura sabiendo todo nuestro pasado. \n"
-                   "¿Seras capaz de terminar con este ciclo al que los humanos estan \n"
+                   "Seras capaz de terminar con este ciclo al que los humanos estan \n"
                    "condenados a repetir en estas tierras antes bendecidas por la diosa?<--\n";
       std::cout << "==========================================================================" <<'\n'; 
       std::cin.get();
       system("cls");
-      std::cout << "Esta inscripcion te dejo mas dudas que respuestas. Sales del pasillo y llegaste ";
+      std::cout << "Esta inscripcion te dejo mas dudas que respuestas. Sales del pasillo y llegaste\n ";
       std::cout << " al lugar donde estan las palancas.\n";
       std::cout << std::endl;
       std::cin.get();
@@ -874,8 +871,8 @@ void Mito2(struct Personaje &p, int penalizacion) {
                "prohibido\nPalanca 3: un defecto de las personas\n";
   std::cout << "Palanca 4: una diosa==\n" << std::endl;
   do {
-    std::cout << "Es un acertijo, teniendo en cuenta lo que has aprendido "
-                 "decides activar la palanca:\n";
+    std::cout << "Es un acertijo, teniendo en cuenta lo que has aprendido\n "
+                 "decides activar la palanca:";
     std::cin >> respuesta;
     std::cout << std::endl;
     if (respuesta != 3) {
@@ -888,7 +885,7 @@ void Mito2(struct Personaje &p, int penalizacion) {
   std::cin.get();
   system("cls");
   std::cout << "===============================================================" <<'\n';
-  std::cout << "Al resolver el acertijo y jalar la palanca se abrio ante ti "
+  std::cout << "Al resolver el acertijo y jalar la palanca se abrio ante ti\n "
                "otro pasillo que te llevo a una recamara con dos cofres.\n";
   std::cout << "===============================================================" <<'\n';
   std::cout << std::endl << "Decides abrirlos\n";
@@ -897,14 +894,14 @@ void Mito2(struct Personaje &p, int penalizacion) {
   Cofre2(p);
   Penalizacion(p,penalizacion);
   std::cin.get();
-
+  system("cls");
   std::cout << "Observas el lugar una ultima vez para asegurarte que no te \n"
                "pierdas de algun detalle. \n";
   std::cout << "La sala esta repleta de textos pero uno te llama la atencion:\n"
             << std::endl;
   std::cin.get();
-  std::cout << "==El lago al norte donde la diosa llora por su amado, es la "
-               "solucion al rompecabezas.Se precavido en tu aventura y ";
+  std::cout << "==El lago al norte donde la diosa llora por su amado, es la\n "
+               "solucion al rompecabezas.Se precavido en tu aventura y \n";
   std::cout << " Recuerda, viajero, tu codicia te acechara en el final. ==\n"
             << std::endl;
   std::cin.get();
@@ -961,18 +958,17 @@ void Mito3(struct Personaje &p, int penalizacion, bool &fin, bool &tablero) {
   int lago;
   char accion1,accion2;
 
-  std::cout << "Al llegar no sabes a que lago podrias dirigirte pues la pista "
-               "no fue muy clara "
-            << "llegas a una senalización donde te muestran algunas ubicaciones\n ";
+  std::cout << "Al llegar no sabes a que lago podrias dirigirte pues la pista \n"
+               "no fue muy clara \n"
+            << "llegas a una senalizacion donde te muestran algunas ubicaciones\n\n ";
   /*(Si el usuario observo el tablero de la fase 1 recordara que el 
   lago cristal estaba presentando un crecimiento extraño) */
   if (tablero){
-    std::cout<< "Un recuerdo llego a tu cabeza, nada menos que el encabezado"
-             << "encontrado en nerva sobre el lago cristal<<'\n";
+    std::cout<< "Un recuerdo llego a tu cabeza, nada menos que el encabezado\n"
+             << "encontrado en nerva sobre el lago cristal\n";
 
-    std::cout << "\nComo no perdias nada por ir a investigar te adentras a las ";
+    std::cout << "\nComo no perdias nada por ir a investigar te adentras a las\n "
                  "profundidades del bosque donde el lago se encuentra.\n";
-    std::cin.ignore();
     std::cin.get();
     system("cls");
   }else{
@@ -995,26 +991,24 @@ void Mito3(struct Personaje &p, int penalizacion, bool &fin, bool &tablero) {
   /*Si no viste el tablero deberás elegir entre 3 lagos , cada uno al que vayas
   y no sea, será una pérdida de tiempo hasta que vas al lago correcto)*/
   std::cout << "===============================================================" <<'\n';
-  std::cout << "Te adentras al bosque, la oscuridad emerge en un solo "
-               "instante, pero algo llama en lo profundo, un brillo lejano "
-               "que parece susurrar tu nombre, decides seguirlo porque en "
-               "realidad no tienes opcion. "
-               "Estas muy cerca pero algo no se siente bien, algo te esta "
-               "observando, pero el lago te llama, o es solo un anhelo "
-               "ahogado que perduro por siglos ";
+  std::cout << "Te adentras al bosque, la oscuridad emerge en un solo \n"
+               "instante, pero algo llama en lo profundo, un brillo lejano \n"
+               "que parece susurrar tu nombre, decides seguirlo porque en \n"
+               "realidad no tienes opcion. \n"
+               "Estas muy cerca pero algo no se siente bien, algo te esta \n"
+               "observando, pero el lago te llama, o es solo un anhelo \n"
+               "ahogado que perduro por siglos \n";
   std::cout << "===============================================================" <<'\n';
-  std::cin.ignore();
   std::cin.get();
   system("cls");
   std::cout << "===============================================================" <<'\n';
-  std::cout << "De pronto un sonido se escucha en el bosque, las ramas "
-               "truenan pero que es ? Parecen pisadas, volteas y una "
-               "criatura te mira desde lo lejos, sus ojos parecen penetrar "
-               "tu alma, sus largas extremidades sobresalen como si fueran "
-               "ramas, parece que busca algo pero eso es para otro momento "
-               "porque parece que se acaba de fijar en ti.";
+  std::cout << "De pronto un sonido se escucha en el bosque, las ramas \n"
+               "truenan pero que es ? Parecen pisadas, volteas y una \n"
+               "criatura te mira desde lo lejos, sus ojos parecen penetrar \n"
+               "tu alma, sus largas extremidades sobresalen como si fueran \n"
+               "ramas, parece que busca algo pero eso es para otro momento \n"
+               "porque parece que se acaba de fijar en ti.\n";
   std::cout << "===============================================================" <<'\n';
-  std::cin.ignore();
   std::cin.get();
   do{
     system("cls");
@@ -1065,16 +1059,17 @@ void Mito3(struct Personaje &p, int penalizacion, bool &fin, bool &tablero) {
     }
     }while(accion2!='A'&&accion2!='B'&&accion2!='C');
     if(sucede){
+      system("cls");
       std::cout<<"Lograste derrotarlo\n";
       Objetos(p);
       Penalizacion(p,penalizacion);
       std::cout<<"Escuchas un ruido en el lago y vez como de el sale una mujer con vestido blando\n";
+      std::cin.get()
     }
   }
   if(!sucede){
     std::cout << "El  wendigo se acerca para acabar de matarte solo te queda una cosa por hacer \n"
-              << "("<<p.reputacion<<"% probabilidad de exito)";
-    std::cin.ignore();
+              << "("<<p.reputacion<<"% probabilidad de exito)\n";
     std::cin.get();
     sucede=AleatorioAccion(p.reputacion);
     if(sucede){
@@ -1088,13 +1083,12 @@ void Mito3(struct Personaje &p, int penalizacion, bool &fin, bool &tablero) {
     else{
       std::cout << "=======================================================================" <<'\n';
       std::cout << "Nada puede detener al wendigo que se avalanza y te ataca gravemente, sus ojos, \n"
-                << "muestran mas codicia, lo ultimo que pudiste ver es a ese mounstro crecer"
-                << "mientras tu te desvanecias en el aire";
+                << "muestran mas codicia, lo ultimo que pudiste ver es a ese mounstro crecer\n"
+                << "mientras tu te desvanecias en el aire\n";
       std::cout << "=======================================================================" <<'\n';
-      std::cin.ignore();
       std::cin.get();
       system("cls");
-      std::cout<<"Fin del juego. Moriste por el wendigo";
+      std::cout<<"Fin del juego. Moriste por el wendigo\n";
       fin=true;
       return;
     }
@@ -1106,15 +1100,15 @@ void Mito3(struct Personaje &p, int penalizacion, bool &fin, bool &tablero) {
                "y preguntas su nombre\n-"
                "-Yo soy la diosa Ika, humano,\n"
                " No se que buscas aqui pero no te dare nada, sigue tu rumbo y \n"
-               " has como si esto nunca paso ";
+               " has como si esto nunca paso \n";
   std::cout << "=================================================================" <<'\n';
   std::cout << std::endl;
   std::cin.get();
   system("cls");
   std::cout << "=================================================================" <<'\n'; 
-  std::cout << "Le explicas que no puedes hacer eso, estas en una mision del reino "
+  std::cout << "Le explicas que no puedes hacer eso, estas en una mision del reino \n"
                "para que vuelva a ser prospero como hace mucho tiempo atras\n "
-               "La diosa te mira incredula de tu palabra";
+               "La diosa te mira incredula de tu palabra\n";
   std::cout << "=================================================================" <<'\n'; 
   std::cout << std::endl;
   std::cin.get();
@@ -1130,14 +1124,14 @@ void Mito3(struct Personaje &p, int penalizacion, bool &fin, bool &tablero) {
   system("cls");
   std::cout << "============================================================" <<'\n';
   std::cout<< "No logras comprender al inicio que te dice pero sabes que \n"
-              "no tienes alternativa";
+              "no tienes alternativa\n";
   std::cout << "============================================================" <<'\n';
   std::cout << std::endl;
   std::cin.get();
   system("cls");
    std::cout << "============================================================" <<'\n';
   std::cout
-      << "--Diosa Ika se lo que hicieron hace muchos años, y se que la "
+      << "--Diosa Ika se lo que hicieron hace muchos anios, y se que la \n"
          "codicia acabo con la vida del caballero\n"
          " ==la diosa parece sorprendida que lo conoces== "
          "\n--Pero aun asi la gente necesita un futuro al que aspirar \n"
@@ -1149,9 +1143,15 @@ void Mito3(struct Personaje &p, int penalizacion, bool &fin, bool &tablero) {
    std::cout << "============================================================" <<'\n';
   std::cout << "*La diosa suspiro*--Esta bien ten la rueda pero recuerda \n"
                "que no todo es lo que parece, que el destino y la suerte te \n"
-               "protejan aventurero, espero y que tomes una decisión acertada.\n";
+               "protejan aventurero, espero y que tomes una decision acertada.\n";
    std::cout << "============================================================" <<'\n';
   std::cout << std::endl;
   std::cin.get();
   system("cls");
+  std::cout << "Aun falta mucho camino aventurero pero por el momento aqui termina \n"
+            << "tu viaje, que sera el tesoro que tanto codicia la humanidad?\n"
+            << "y quien esta detras de los insurgentes en eldoria?\n";
+  std::cin.get();
+  system("cls");
+  std::cout<<"-------------------------FIN-------------------------\n";
 }
